@@ -1,4 +1,4 @@
-package Level1;
+package level1;
 
 import java.util.*;
 
@@ -47,9 +47,6 @@ public class App {
                         result = num1 / num2;
                         break;
                     }
-                case '%':
-                    result = num1 % num2;
-                    break;
             }
             System.out.println("결과: " + result);
 
