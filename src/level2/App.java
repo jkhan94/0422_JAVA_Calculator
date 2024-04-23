@@ -1,5 +1,6 @@
 package level2;
 
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class App {
@@ -9,6 +10,7 @@ public class App {
         - 연산 결과는 Calculator 클래스의 연산 결과를 저장하는 필드에 저장.*/
         int num1, num2;
         char operator;
+        LinkedList<Double> Result = new LinkedList<Double>();
         String repeat, removeVal, printResult;
         Scanner sc = new Scanner(System.in);
         Calculator calc = new Calculator();
@@ -28,13 +30,15 @@ public class App {
             System.out.print("사칙연산 기호를 입력하세요: ");
             operator = sc.next().charAt(0);
 
-            calc.operResult.add(calc.calculate(num1, num2, operator));
-            System.out.println(calc.operResult);
+            Result.add(calc.calculate(num1, num2, operator));
+            calc.setOperResult(Result);
+            System.out.println(calc.getOperResult());
 
             System.out.println("가장 먼저 저장된 연산 결과를 삭제하려면 remove를 입력하세요. (삭제하지 않으려면 아무 키나 누르세요)");
             removeVal = sc.next();
             if (removeVal.equals("remove")) {
-                calc.operResult.remove(0);
+                Result.remove(0);
+                calc.setOperResult(Result);
             }
 
             // 1-8. foreach(향상된 for문)을 활용하여 inquiry라는 문자열이 입력되면 저장된 연산 결과 전부를 출력.
@@ -42,10 +46,7 @@ public class App {
             printResult = sc.next();
             if (printResult.equals("inquiry")) {
                 System.out.print("연산 결과 출력 : ");
-                for (double number : calc.operResult) {
-                    System.out.print(number + ", ");
-                }
-                System.out.println();
+                System.out.println(calc.getOperResult());
             }
 
             System.out.println("더 계산하시려면 아무 키나 누르세요. (exit 입력 시 종료)");

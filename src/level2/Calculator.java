@@ -9,7 +9,17 @@ import java.util.LinkedList;
 - 나눗셈에서 분모에 0이 들어오거나 연산자 기호가 잘못 들어온 경우 적합한 Exception 클래스를 생성하여 throw 합니다. (매개변수로 해당 오류 내용을 전달.)
 * */
 public class Calculator {
-    LinkedList<Double> operResult = new LinkedList<Double>();
+    /* 2-3. App 클래스의 main 메서드에서 Calculator 클래스의 연산 결과를 저장하고 있는 컬렉션 필드에 직접 접근하지 못하도록 수정합니다. (캡슐화)
+    - 간접 접근을 통해 필드에 접근하여 가져올 수 있도록 구현합니다. (Getter 메서드)
+    - 간접 접근을 통해 필드에 접근하여 수정할 수 있도록 구현합니다. (Setter 메서드) */
+    private LinkedList<Double> operResult = new LinkedList<Double>();
+
+    public LinkedList<Double> getOperResult() {
+        return operResult;
+    }
+    public void setOperResult(LinkedList<Double> operResult) {
+        this.operResult = operResult;
+    }
 
     public double calculate(int num1, int num2, char operator) throws DivisionException, BadOperatorException {
         double result = 0.0;
