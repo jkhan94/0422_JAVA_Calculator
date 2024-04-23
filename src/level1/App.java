@@ -4,6 +4,7 @@ import java.util.*;
 
 public class App {
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
         int num1, num2;
         char operator;
         String repeat, removeVal, printResult;
@@ -12,7 +13,6 @@ public class App {
         // 1-4. 반복문(e.g. for, while)을 사용하여 반복의 종료를 알려주는 “exit” 문자열을 입력하기 전까지 무한으로 계산을 진행할 수 있도록 수정
         while (true) {
             double result = 0.0;
-            Scanner sc = new Scanner(System.in);
 
             // 1-1. Scanner를 사용하여 양의 정수 2개(0 포함)를 전달 받음.
             do {
