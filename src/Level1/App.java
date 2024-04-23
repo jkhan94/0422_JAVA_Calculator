@@ -1,4 +1,4 @@
-package Calculator;
+package Level1;
 
 import java.util.*;
 
@@ -12,13 +12,15 @@ public class App {
         // 1-4. 반복문(e.g. for, while)을 사용하여 반복의 종료를 알려주는 “exit” 문자열을 입력하기 전까지 무한으로 계산을 진행할 수 있도록 수정
         while (true) {
             double result = 0.0;
+            Scanner sc = new Scanner(System.in);
 
             // 1-1. Scanner를 사용하여 양의 정수 2개(0 포함)를 전달 받음.
-            Scanner sc = new Scanner(System.in);
-            System.out.print("첫 번째 숫자를 입력하세요: ");
-            num1 = sc.nextInt();
-            System.out.print("두 번째 숫자를 입력하세요: ");
-            num2 = sc.nextInt();
+            do {
+                System.out.print("첫 번째 양의 정수를 입력하세요: ");
+                num1 = sc.nextInt();
+                System.out.print("두 번째 양의 정수를 입력하세요: ");
+                num2 = sc.nextInt();
+            } while (num1 < 0 || num2 < 0);
 
             // 1-2. Scanner를 사용하여 사칙연산 기호를 전달 받음. (`charAt(0)`)
             System.out.print("사칙연산 기호를 입력하세요: ");
@@ -72,7 +74,7 @@ public class App {
             printResult = sc.next();
             if (printResult.equals("inquiry")) {
                 System.out.print("연산 결과 출력 : ");
-                for(double number: operResult) {
+                for (double number : operResult) {
                     System.out.print(number + ", ");
                 }
                 System.out.println();
@@ -86,6 +88,7 @@ public class App {
             System.out.println("더 계산하시려면 아무 키나 누르세요. (exit 입력 시 종료)");
             repeat = sc.next();
             if (repeat.equals("exit")) {
+                sc.close();
                 break;
             }
         }
