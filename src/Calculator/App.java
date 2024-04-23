@@ -50,12 +50,18 @@ public class App {
             }
             System.out.println("결과: " + result);
 
+            /* 1-5. 연산 결과 10개를 저장할 수 있는 배열을 선언 및 생성하고 연산의 결과를 저장.
+            - 연산의 결과를 비어있는 곳에 저장하기 위해 저장할 때마다 count 합니다.*/
+            int index=0;
+            double[] operResult = new double[10];
+            operResult[index] = result;
+            index++;
+
             System.out.println("더 계산하시려면 아무 키나 누르세요. (exit 입력 시 종료)");
             repeat = sc.next();
             if (repeat.equals("exit")) {
                 break;
             }
         }
-
     }
 }
