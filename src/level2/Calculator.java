@@ -11,9 +11,14 @@ import java.util.LinkedList;
 public class Calculator {
     LinkedList<Double> operResult = new LinkedList<Double>();
 
-    public double calculate(int num1, int num2, char operator) throws DivisionException, BadOperatorException{
+    public double calculate(int num1, int num2, char operator) throws DivisionException, BadOperatorException {
         double result = 0.0;
         String oper = "+-*/";
+
+        // 스트링.indexOf():  연산기호 문자열 oper에 입력된 연산기호가 없으면 0을 리턴
+        if (oper.indexOf(operator) < 0) {
+            throw new BadOperatorException();
+        }
 
         switch (operator) {
             case '+':
@@ -26,21 +31,12 @@ public class Calculator {
                 result = num1 * num2;
                 break;
             case '/':
-                try {
-                    if(num2 == 0){
-                        throw new DivisionException();
-                    }
-                    // 스트링.indexOf():  연산기호 문자열 oper에 입력된 연산기호가 없으면 0을 리턴
-                    if(oper.indexOf(operator)==0){
-                        throw new BadOperatorException();
-                    }
-                    result = num1 / num2;
-                    break;
-                } catch (DivisionException e) {
-                    System.out.println(e.getMessage());
-                } catch (BadOperatorException e){
-                    System.out.println(e.getMessage());
+                if (num2 == 0) {
+                    throw new DivisionException();
                 }
+
+                result = num1 / num2;
+                break;
         }
         return result;
     }
