@@ -38,7 +38,7 @@ public class Calculator {
         double result = 0.0;
         String oper = "+-*/";
 
-        // 스트링.indexOf():  연산기호 문자열 oper에 입력된 연산기호가 없으면 0을 리턴
+        // 스트링.indexOf():  연산기호 문자열 oper에 입력된 연산기호가 없으면 -1을 리턴
         if (oper.indexOf(operator) < 0) {
             throw new BadOperatorException();
         }

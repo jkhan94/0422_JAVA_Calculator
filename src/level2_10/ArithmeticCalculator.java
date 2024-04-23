@@ -1,4 +1,4 @@
-package level2_9;
+package level2_10;
 
 import java.util.LinkedList;
 
@@ -11,11 +11,9 @@ import java.util.LinkedList;
 public class ArithmeticCalculator extends Calculator {
     // 필드
     private LinkedList<Double> operResult = new LinkedList<Double>();
-
     public LinkedList<Double> getOperResult() {
         return operResult;
     }
-
     public void setOperResult(LinkedList<Double> operResult) {
         this.operResult = operResult;
     }
@@ -31,7 +29,7 @@ public class ArithmeticCalculator extends Calculator {
     @Override
     public double calculate(int num1, int num2, char operator) throws BadOperatorException, DivisionException {
         double result = 0.0;
-        String oper = "+-*/";
+        String oper = "+-*/%";
 
         // 스트링.indexOf():  연산기호 문자열 oper에 입력된 연산기호가 없으면 -1을 리턴
         if (oper.indexOf(operator) < 0) {
@@ -40,16 +38,16 @@ public class ArithmeticCalculator extends Calculator {
 
         switch (operator) {
             case '+':
-                result = new AddOperator().add(num1, num2);
+                result = new AddOperator().operate(num1, num2);
                 break;
             case '-':
-                result = new SubtractOperator().subtract(num1, num2);
+                result = new SubtractOperator().operate(num1, num2);
                 break;
             case '*':
-                result = new MultiplyOperator().multiply(num1, num2);
+                result = new MultiplyOperator().operate(num1, num2);
                 break;
             case '/':
-                result = new DivideOperator().divide(num1, num2);
+                result = new DivideOperator().operate(num1, num2);
                 break;
         }
         return result;

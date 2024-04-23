@@ -1,8 +1,9 @@
-package level2_10_1;
+package level2_10;
 
 import java.util.LinkedList;
 import java.util.Scanner;
-/*2-10_1. ArithmeticCalculator 클래스에 추가로 나머지 연산(%) 기능을 추가하기 위해 ModOperator 클래스를 만들어 추가.
+
+/*2-10. ArithmeticCalculator 클래스에 추가로 나머지 연산(%) 기능을 추가하기 위해 ModOperator 클래스를 만들어 추가.
 - 추가하려고 하니 앞으로 계속 기능이 추가되면 여러 부분의 소스코드를 수정해야 한다는 생각이 들었고 “현재 비효율적인 구조가 아닌가?” 라는 의구심이 들었습니다.
 - 따라서 소스 코드의 변경은 최소화하면서 기능을 쉽게 추가(확장)할 수 있는 방법을 고민 해봅니다. (OCP)
 Interface & (다형성의 원리) 등을 활용*/
@@ -54,7 +55,6 @@ public class App {
                 if (printResult.equals("inquiry")) {
                     ariCalc.inquiryResults();
                 }
-
             } else if (operType.equals("원의넓이")) {
                 do {
                     System.out.print("원의 반지름을 입력하세요: ");
