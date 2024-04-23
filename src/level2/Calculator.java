@@ -51,4 +51,11 @@ public class Calculator {
         return result;
     }
 
+    /* 2-4. Calculator 클래스에 저장된 연산 결과들 중 가장 먼저 저장된 데이터를 삭제하는 메서드 구현
+    App 클래스의 main 메서드에 삭제 메서드가 활용될 수 있도록 수정. */
+    //  operResult.clear(); : 전체 값 삭제
+    public void removeResult(){
+        operResult.remove(0);
+    }
+
 }

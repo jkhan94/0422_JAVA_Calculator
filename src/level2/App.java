@@ -7,7 +7,7 @@ public class App {
     public static void main(String[] args) throws DivisionException, BadOperatorException {
         /* 2-2. Level 1에서 구현한 App 클래스의 main 메서드에 Calculator 클래스가 활용될 수 있도록 수정.
         - 연산 수행 역할은 Calculator 클래스가 담당.
-        - 연산 결과는 Calculator 클래스의 연산 결과를 저장하는 필드에 저장.*/
+        - 연산 결과는 Calculator 클래스의 연산 결과를 저장하는 필드에 저장. */
         int num1, num2;
         char operator;
         LinkedList<Double> Result = new LinkedList<Double>();
@@ -37,8 +37,7 @@ public class App {
             System.out.println("가장 먼저 저장된 연산 결과를 삭제하려면 remove를 입력하세요. (삭제하지 않으려면 아무 키나 누르세요)");
             removeVal = sc.next();
             if (removeVal.equals("remove")) {
-                Result.remove(0);
-                calc.setOperResult(Result);
+                calc.removeResult();
             }
 
             // 1-8. foreach(향상된 for문)을 활용하여 inquiry라는 문자열이 입력되면 저장된 연산 결과 전부를 출력.
