@@ -7,6 +7,8 @@ public class App {
         int num1, num2;
         char operator;
         String repeat;
+        int index = 0;
+        double[] operResult = new double[10];
 
         // 1-4. 반복문(e.g. for, while)을 사용하여 반복의 종료를 알려주는 “exit” 문자열을 입력하기 전까지 무한으로 계산을 진행할 수 있도록 수정
         while (true) {
@@ -52,10 +54,19 @@ public class App {
 
             /* 1-5. 연산 결과 10개를 저장할 수 있는 배열을 선언 및 생성하고 연산의 결과를 저장.
             - 연산의 결과를 비어있는 곳에 저장하기 위해 저장할 때마다 count 합니다.*/
-            int index=0;
-            double[] operResult = new double[10];
-            operResult[index] = result;
-            index++;
+            /*1-6. 연산 결과가 10개 초과하면 가장 먼저 저장된 결과를 삭제하고 새로운 연산 결과가 저장될 수 있도록 소스 코드를 수정.
+            - 현재 저장된 index가 마지막(9)라면 가장 먼저 저장된 결과 값이 삭제 되고 새로운 결과 값이 마지막 index에 저장될 수 있도록 구현.*/
+            if (index != 9) {
+                // 배열이 비어 있으면 결과 저장.
+                operResult[index] = result;
+                index++;
+            } else if (index == 9) {
+                // 배열이 꽉 찼으면 앞으로 당김.
+                for (int i = 0; i < 9; i++) {
+                    operResult[i] = operResult[i + 1];
+                }
+                operResult[9] = result;
+            }
 
             System.out.println("더 계산하시려면 아무 키나 누르세요. (exit 입력 시 종료)");
             repeat = sc.next();
