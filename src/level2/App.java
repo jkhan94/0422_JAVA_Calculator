@@ -9,6 +9,7 @@ public class App {
         - 연산 결과는 Calculator 클래스의 연산 결과를 저장하는 필드에 저장.*/
         int num1, num2;
         char operator;
+        String repeat, removeVal, printResult;
         Scanner sc = new Scanner(System.in);
         Calculator calc = new Calculator();
 
@@ -29,6 +30,30 @@ public class App {
 
             calc.operResult.add(calc.calculate(num1, num2, operator));
             System.out.println(calc.operResult);
+
+            System.out.println("가장 먼저 저장된 연산 결과를 삭제하려면 remove를 입력하세요. (삭제하지 않으려면 아무 키나 누르세요)");
+            removeVal = sc.next();
+            if (removeVal.equals("remove")) {
+                calc.operResult.remove(0);
+            }
+
+            // 1-8. foreach(향상된 for문)을 활용하여 inquiry라는 문자열이 입력되면 저장된 연산 결과 전부를 출력.
+            System.out.println("저장된 연산결과를 조회하시려면 inquiry를 입력하세요. (조회하지 않으려면 아무 키나 누르세요)");
+            printResult = sc.next();
+            if (printResult.equals("inquiry")) {
+                System.out.print("연산 결과 출력 : ");
+                for (double number : calc.operResult) {
+                    System.out.print(number + ", ");
+                }
+                System.out.println();
+            }
+
+            System.out.println("더 계산하시려면 아무 키나 누르세요. (exit 입력 시 종료)");
+            repeat = sc.next();
+            if (repeat.equals("exit")) {
+                sc.close();
+                break;
+            }
 
         }
 
