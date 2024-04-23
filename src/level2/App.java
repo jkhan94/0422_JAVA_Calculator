@@ -11,7 +11,7 @@ public class App {
         int num1, num2;
         char operator;
         LinkedList<Double> Result = new LinkedList<Double>();
-        String repeat, removeVal, printResult;
+        String repeat, removeVal, printResult, operType;
         Scanner sc = new Scanner(System.in);
         Calculator calc = new Calculator();
 
@@ -19,42 +19,58 @@ public class App {
         while (true) {
             double result = 0.0;
 
-            do {
-                System.out.print("첫 번째 양의 정수를 입력하세요: ");
-                num1 = sc.nextInt();
-                System.out.print("두 번째 양의 정수를 입력하세요: ");
-                num2 = sc.nextInt();
-            } while (num1 < 0 || num2 < 0);
+            System.out.println("수행할 연산의 종류를 입력하세요 (1.사칙연산 2.원의넓이) ");
+            operType = sc.next();
 
-            // Scanner를 사용하여 사칙연산 기호를 전달 받음. (`charAt(0)`)
-            System.out.print("사칙연산 기호를 입력하세요: ");
-            operator = sc.next().charAt(0);
+            if (operType.equals("사칙연산")) {
+                do {
+                    System.out.print("첫 번째 양의 정수를 입력하세요: ");
+                    num1 = sc.nextInt();
+                    System.out.print("두 번째 양의 정수를 입력하세요: ");
+                    num2 = sc.nextInt();
+                } while (num1 < 0 || num2 < 0);
 
-            Result.add(calc.calculate(num1, num2, operator));
-            calc.setOperResult(Result);
-            System.out.println(calc.getOperResult());
+                // Scanner를 사용하여 사칙연산 기호를 전달 받음. (`charAt(0)`)
+                System.out.print("사칙연산 기호를 입력하세요: ");
+                operator = sc.next().charAt(0);
 
-            System.out.println("가장 먼저 저장된 연산 결과를 삭제하려면 remove를 입력하세요. (삭제하지 않으려면 아무 키나 누르세요)");
-            removeVal = sc.next();
-            if (removeVal.equals("remove")) {
-                calc.removeResult();
+                Result.add(calc.calculate(num1, num2, operator));
+                calc.setOperResult(Result);
+                System.out.println(calc.getOperResult());
+
+                System.out.println("가장 먼저 저장된 연산 결과를 삭제하려면 remove를 입력하세요. (삭제하지 않으려면 아무 키나 누르세요)");
+                removeVal = sc.next();
+                if (removeVal.equals("remove")) {
+                    calc.removeResult();
+                }
+
+                // 1-8. foreach(향상된 for문)을 활용하여 inquiry라는 문자열이 입력되면 저장된 연산 결과 전부를 출력.
+                System.out.println("저장된 연산결과를 조회하시려면 inquiry를 입력하세요. (조회하지 않으려면 아무 키나 누르세요)");
+                printResult = sc.next();
+                if (printResult.equals("inquiry")) {
+                    calc.inquiryResults();
+                }
+
+                System.out.println("더 계산하시려면 아무 키나 누르세요. (exit 입력 시 종료)");
+                repeat = sc.next();
+                if (repeat.equals("exit")) {
+                    sc.close();
+                    break;
+                }
+
+            } else if (operType.equals("원의넓이")) {
+                do {
+                    System.out.print("원의 반지름을 입력하세요: ");
+                    num1 = sc.nextInt();
+                } while (num1 < 0);
+                Result.add(calc.calculateCircleArea(num1));
+                // 원의 넓이 저장
+                calc.setAreaResult(Result);
+                System.out.println(calc.getAreaResult());
+                calc.inquiryAreas();
             }
 
-            // 1-8. foreach(향상된 for문)을 활용하여 inquiry라는 문자열이 입력되면 저장된 연산 결과 전부를 출력.
-            System.out.println("저장된 연산결과를 조회하시려면 inquiry를 입력하세요. (조회하지 않으려면 아무 키나 누르세요)");
-            printResult = sc.next();
-            if (printResult.equals("inquiry")) {
-                calc.inquiryResults();
-            }
-
-            System.out.println("더 계산하시려면 아무 키나 누르세요. (exit 입력 시 종료)");
-            repeat = sc.next();
-            if (repeat.equals("exit")) {
-                sc.close();
-                break;
-            }
-
-        }
+        } // while 루프
 
     }
 }
