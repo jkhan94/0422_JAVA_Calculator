@@ -56,11 +56,11 @@ public class App {
             - 연산의 결과를 비어있는 곳에 저장하기 위해 저장할 때마다 count 합니다.*/
             /*1-6. 연산 결과가 10개 초과하면 가장 먼저 저장된 결과를 삭제하고 새로운 연산 결과가 저장될 수 있도록 소스 코드를 수정.
             - 현재 저장된 index가 마지막(9)라면 가장 먼저 저장된 결과 값이 삭제 되고 새로운 결과 값이 마지막 index에 저장될 수 있도록 구현.*/
-            if (index != 9) {
+            if (index < 10) {
                 // 배열이 비어 있으면 결과 저장.
                 operResult[index] = result;
                 index++;
-            } else if (index == 9) {
+            } else if (index >= 10) {
                 // 배열이 꽉 찼으면 앞으로 당김.
                 for (int i = 0; i < 9; i++) {
                     operResult[i] = operResult[i + 1];
