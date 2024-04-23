@@ -9,6 +9,7 @@ import java.util.LinkedList;
 - 나눗셈에서 분모에 0이 들어오거나 연산자 기호가 잘못 들어온 경우 적합한 Exception 클래스를 생성하여 throw 합니다. (매개변수로 해당 오류 내용을 전달.)
 * */
 public class Calculator {
+ // 필드
     /* 2-3. App 클래스의 main 메서드에서 Calculator 클래스의 연산 결과를 저장하고 있는 컬렉션 필드에 직접 접근하지 못하도록 수정합니다. (캡슐화)
     - 간접 접근을 통해 필드에 접근하여 가져올 수 있도록 구현합니다. (Getter 메서드)
     - 간접 접근을 통해 필드에 접근하여 수정할 수 있도록 구현합니다. (Setter 메서드) */
@@ -22,6 +23,16 @@ public class Calculator {
         this.operResult = operResult;
     }
 
+// 생성자
+    /* 2-6. Calculator 인스턴스를 생성(new)할 때 생성자를 통해, 연산 결과를 저장하고 있는 컬렉션 필드가 초기화 되도록 수정 */
+    public Calculator() {
+        // 리스트는 따로 초기화할 필요가 없다.
+        // 그럼에도 초기화하라는 걸 보면 저장된 값을 지우라는 것 같다.
+        // clear() : 리스트에 저장된 전체 값 삭제
+        operResult.clear();
+    }
+
+    // 메서드
     public double calculate(int num1, int num2, char operator) throws DivisionException, BadOperatorException {
         double result = 0.0;
         String oper = "+-*/";
@@ -54,7 +65,6 @@ public class Calculator {
 
     /* 2-4. Calculator 클래스에 저장된 연산 결과들 중 가장 먼저 저장된 데이터를 삭제하는 메서드 구현
     App 클래스의 main 메서드에 삭제 메서드가 활용될 수 있도록 수정. */
-    // operResult.clear(); : 전체 값 삭제
     public void removeResult() {
         operResult.remove(0);
     }
