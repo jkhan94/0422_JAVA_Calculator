@@ -6,7 +6,7 @@ public class App {
     public static void main(String[] args) {
         int num1, num2;
         char operator;
-        String repeat, removeVal;
+        String repeat, removeVal, printResult;
         LinkedList<Double> operResult = new LinkedList<Double>();
 
         // 1-4. 반복문(e.g. for, while)을 사용하여 반복의 종료를 알려주는 “exit” 문자열을 입력하기 전까지 무한으로 계산을 진행할 수 있도록 수정
@@ -65,6 +65,22 @@ public class App {
             removeVal = sc.next();
             if (removeVal.equals("remove")) {
                 operResult.remove(0);
+            }
+
+            // 1-8. foreach(향상된 for문)을 활용하여 inquiry라는 문자열이 입력되면 저장된 연산 결과 전부를 출력.
+            System.out.println("저장된 연산결과를 조회하시려면 inquiry를 입력하세요. (조회하지 않으려면 아무 키나 누르세요)");
+            printResult = sc.next();
+            if (printResult.equals("inquiry")) {
+                System.out.print("연산 결과 출력 : ");
+                for(double number: operResult) {
+                    System.out.print(number + ", ");
+                }
+                System.out.println();
+                // 이터레이터
+                /*Iterator<Double> iter = operResult.iterator();
+                while (iter.hasNext()) {
+                    System.out.println(iter.next());
+                }*/
             }
 
             System.out.println("더 계산하시려면 아무 키나 누르세요. (exit 입력 시 종료)");
