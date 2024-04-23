@@ -17,6 +17,7 @@ public class Calculator {
     public LinkedList<Double> getOperResult() {
         return operResult;
     }
+
     public void setOperResult(LinkedList<Double> operResult) {
         this.operResult = operResult;
     }
@@ -53,9 +54,15 @@ public class Calculator {
 
     /* 2-4. Calculator 클래스에 저장된 연산 결과들 중 가장 먼저 저장된 데이터를 삭제하는 메서드 구현
     App 클래스의 main 메서드에 삭제 메서드가 활용될 수 있도록 수정. */
-    //  operResult.clear(); : 전체 값 삭제
-    public void removeResult(){
+    // operResult.clear(); : 전체 값 삭제
+    public void removeResult() {
         operResult.remove(0);
+    }
+
+    /* 2-5.Calculator 클래스에 저장된 연산 결과들을 조회하는 메서드 구현
+    App 클래스의 main 메서드에 조회 메서드가 활용될 수 있도록 수정. */
+    public void inquiryResults() {
+        System.out.println("연산 결과 출력 : " + operResult);
     }
 
 }

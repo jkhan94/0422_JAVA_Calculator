@@ -44,8 +44,7 @@ public class App {
             System.out.println("저장된 연산결과를 조회하시려면 inquiry를 입력하세요. (조회하지 않으려면 아무 키나 누르세요)");
             printResult = sc.next();
             if (printResult.equals("inquiry")) {
-                System.out.print("연산 결과 출력 : ");
-                System.out.println(calc.getOperResult());
+                calc.inquiryResults();
             }
 
             System.out.println("더 계산하시려면 아무 키나 누르세요. (exit 입력 시 종료)");
