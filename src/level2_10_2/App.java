@@ -1,7 +1,6 @@
 package level2_10_2;
 
-
-import level2_10_2.exception.BadOperatorException;
+import level2_10_1.BadOperatorException;
 import level2_10_2.exception.DivisionException;
 import level2_10_2.instance.ArithmeticCalculator;
 import level2_10_2.instance.CircleCalculator;
@@ -15,16 +14,18 @@ import java.util.Scanner;
 Interface & (다형성의 원리) 등을 활용*/
 
 public class App {
-    public static void main(String[] args) throws DivisionException, BadOperatorException {
+    public static void main(String[] args) {
         int num1, num2;
         char operator;
-        LinkedList<Double> circleResult = new LinkedList<Double>();
-        LinkedList<Double> arithResult = new LinkedList<Double>();
         String repeat, removeVal, printResult, operType;
+        String oper = "+-*/%";
         Scanner sc = new Scanner(System.in);
 
         ArithmeticCalculator ariCalc = new ArithmeticCalculator();
+        LinkedList<Double> arithResult = new LinkedList<Double>();
+
         CircleCalculator cirCalc = new CircleCalculator();
+        LinkedList<Double> circleResult = new LinkedList<Double>();
 
         // Scanner를 사용하여 양의 정수 2개(0 포함)를 전달 받음.
         while (true) {
@@ -34,7 +35,7 @@ public class App {
             System.out.println("수행할 연산의 종류를 입력하세요 (1.사칙연산 2.원의넓이) ");
             operType = sc.next();
 
-
+// 사칙연산
             if (operType.equals("사칙연산")) {
                 // 양의 정수를 입력받을 때까지 반복
                 do {
@@ -45,10 +46,43 @@ public class App {
                 } while (num1 < 0 || num2 < 0);
 
                 // Scanner를 사용하여 사칙연산 기호를 전달 받음. (`charAt(0)`)
-                System.out.print("사칙연산 기호를 입력하세요: ");
+                System.out.print("사칙연산 기호를 입력하세요 (+ - * / %) : ");
                 operator = sc.next().charAt(0);
 
-                arithResult.add(ariCalc.calculate(num1, num2, operator));
+                // 스트링.indexOf():  연산기호 문자열 oper에 입력된 연산기호가 없으면 -1을 리턴
+                try {
+                    if (oper.indexOf(operator) < 0) {
+                        throw new BadOperatorException();
+                    }
+                } catch (BadOperatorException e) {
+                    System.out.println(e.getMessage());
+                }
+
+                // 입력된 연산기호를 바탕으로 연산 수행
+                switch (operator) {
+                    case '+':
+                        arithResult.add(ariCalc.add(num1, num2));
+                        break;
+                    case '-':
+                        arithResult.add(ariCalc.sub(num1, num2));
+                        break;
+                    case '*':
+                        arithResult.add(ariCalc.mul(num1, num2));
+                        break;
+                    case '/':
+                        try {
+                            if (num2 == 0) {
+                                throw new DivisionException();
+                            }
+                            arithResult.add(ariCalc.div(num1, num2));
+                        } catch (DivisionException e) {
+                            System.out.println(e.getMessage());
+                        }
+                        break;
+                    case '%':
+                        arithResult.add(ariCalc.mod(num1, num2));
+                        break;
+                }
                 ariCalc.setOperResult(arithResult);
 //                System.out.println(ariCalc.getOperResult());
 
@@ -72,7 +106,7 @@ public class App {
                     num1 = sc.nextInt();
                 } while (num1 < 0);
                 // 원의 넓이 계산
-                circleResult.add(cirCalc.calculate(num1));
+                circleResult.add(cirCalc.getArea(num1));
                 // 원의 넓이 저장
                 cirCalc.setOperResult(circleResult);
 //              System.out.println(cirCalc.getOperResult());

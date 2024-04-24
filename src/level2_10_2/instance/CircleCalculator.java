@@ -21,12 +21,14 @@ public class CircleCalculator extends AdapterClass {
     public CircleCalculator() {
     }
 
-    @Override
-    public double calculate(int a) {
+    // 원의 면적 구하기
+    public double getArea(int a) {
+        // 원의 넓이
         double area = new CircleAreaOperator().calculate(a);
         return area;
     }
 
+    // 저장된 결과값 출력
     @Override
     public void inquiryResults() {
         System.out.println("저장된 연산 결과 출력 : " + operResult);

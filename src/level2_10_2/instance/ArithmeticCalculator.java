@@ -1,8 +1,6 @@
 package level2_10_2.instance;
 
 import level2_10_2.AdapterClass;
-import level2_10_2.exception.BadOperatorException;
-import level2_10_2.exception.DivisionException;
 import level2_10_2.operator.*;
 
 import java.util.LinkedList;
@@ -15,7 +13,6 @@ public class ArithmeticCalculator extends AdapterClass {
     public LinkedList<Double> getOperResult() {
         return operResult;
     }
-
     public void setOperResult(LinkedList<Double> operResult) {
         this.operResult = operResult;
     }
@@ -24,41 +21,30 @@ public class ArithmeticCalculator extends AdapterClass {
     public ArithmeticCalculator() {
     }
 
-    // 입력된 연산기호를 바탕으로 연산 수행
-    public double calculate(int num1, int num2, char operator) throws BadOperatorException, DivisionException {
-        double result = 0.0;
-        String oper = "+-*/%";
-
-        // 스트링.indexOf():  연산기호 문자열 oper에 입력된 연산기호가 없으면 -1을 리턴
-        if (oper.indexOf(operator) < 0) {
-            throw new BadOperatorException();
-        }
-
-        switch (operator) {
-            case '+':
-                result = new AddOperator().calculate(num1, num2);
-                break;
-            case '-':
-                result = new SubtractOperator().calculate(num1, num2);
-                break;
-            case '*':
-                result = new MultiplyOperator().calculate(num1, num2);
-                break;
-            case '/':
-                result = new DivideOperator().calculate(num1, num2);
-                break;
-            case '%':
-                result = new ModOperator().calculate(num1, num2);
-                break;
-        }
-        return result;
+    // 사칙연산 메소드
+    public double add(int num1, int num2){
+        return new AddOperator().calculate(num1, num2);
+    }
+    public double sub(int num1, int num2){
+        return new SubtractOperator().calculate(num1, num2);
+    }
+    public double mul(int num1, int num2){
+        return new MultiplyOperator().calculate(num1, num2);
+    }
+    public double div(int num1, int num2){
+        return new DivideOperator().calculate(num1, num2);
+    }
+    public double mod(int num1, int num2){
+        return new ModOperator().calculate(num1, num2);
     }
 
+    // 저장된지 가장 오래된 값 제거
     @Override
     public void removeResult() {
         operResult.remove(0);
     }
 
+    // 리스트에 저장된 값들 출력
     @Override
     public void inquiryResults() {
         System.out.println("저장된 연산 결과 출력 : " + operResult);
