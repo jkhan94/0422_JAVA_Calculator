@@ -1,7 +1,7 @@
 package level2_10_2.instance;
 
 import level2_10_2.AdapterClass;
-import level2_10_2.operator.CircleAreaOperator;
+import level2_10_2.operator.circle.CircleAreaOperator;
 
 import java.util.LinkedList;
 

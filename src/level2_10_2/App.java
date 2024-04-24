@@ -13,13 +13,29 @@ import java.util.Scanner;
 - 따라서 소스 코드의 변경은 최소화하면서 기능을 쉽게 추가(확장)할 수 있는 방법을 고민 해봅니다. (OCP)
 Interface & (다형성의 원리) 등을 활용*/
 
+/*새 연산 추가 시 OperationTypes클래스의 opertypes에 저장.
+
+operator 클래스에 AdapterClass 상속받는 클래스 생성해서 기능 구현.
+*매개변수가 3개 필요한 연산은 인터페이스 operation에 선언, AdapterClass에서 오버라이딩 한 후 구현.
+
+instance 패키지 내 클래스에서 메소드를 통해 기능을 구현한 클래스를 불러와서 사용.
+기능은 각 operator 클래스에서 정의되지만 instance 클래스는 이를 호출만 함.
+따라서 기능 변경이 필요할 경우 operator 클래스만 수정하면 됨.
+만약 덧셈 연산을 두 가지로 구현하고 싶을 경우 이름만 다른 클래스를 생성해서 구현하면 됨.
+
+새로운 형태의 객체가 필요할 경우 instance 패키지에 생성.
+*/
+
 public class App {
     public static void main(String[] args) {
         int num1, num2;
         char operator;
         String repeat, removeVal, printResult, operType;
+        // 사칙연산 시 연산자가 제대로 입력됐는지 확인하기 위한 변수
         String oper = "+-*/%";
         Scanner sc = new Scanner(System.in);
+
+        OperationTypes operTypes = new OperationTypes();
 
         ArithmeticCalculator ariCalc = new ArithmeticCalculator();
         LinkedList<Double> arithResult = new LinkedList<Double>();
@@ -30,7 +46,8 @@ public class App {
         // Scanner를 사용하여 양의 정수 2개(0 포함)를 전달 받음.
         while (true) {
             // 가능한 연산 종류가 입력될 때까지 반복
-            System.out.println("수행할 연산의 종류를 입력하세요 (1.사칙연산 2.원의넓이) ");
+            System.out.print("수행할 연산의 종류를 입력하세요: ");
+            operTypes.printOperTypes();
             operType = sc.next();
 
 // 사칙연산

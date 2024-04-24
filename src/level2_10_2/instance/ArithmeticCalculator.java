@@ -1,7 +1,7 @@
 package level2_10_2.instance;
 
 import level2_10_2.AdapterClass;
-import level2_10_2.operator.*;
+import level2_10_2.operator.arithmetic.*;
 
 import java.util.LinkedList;
 
