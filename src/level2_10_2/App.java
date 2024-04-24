@@ -1,6 +1,6 @@
 package level2_10_2;
 
-import level2_10_1.BadOperatorException;
+import level2_10_2.exception.BadOperatorException;
 import level2_10_2.exception.DivisionException;
 import level2_10_2.instance.ArithmeticCalculator;
 import level2_10_2.instance.CircleCalculator;
