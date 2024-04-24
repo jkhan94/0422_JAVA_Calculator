@@ -49,6 +49,9 @@ public class ArithmeticCalculator extends Calculator {
             case '/':
                 result = new DivideOperator().operate(num1, num2);
                 break;
+            case '%':
+                result = new ModOperator().operate(num1, num2);
+                break;
         }
         return result;
     }
