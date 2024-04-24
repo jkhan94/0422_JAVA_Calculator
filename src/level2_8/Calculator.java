@@ -1,8 +1,5 @@
 package level2_8;
 
-import java.util.LinkedList;
-
-
 public class Calculator {
     // 생성자
     public Calculator() {
