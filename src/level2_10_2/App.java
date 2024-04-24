@@ -29,8 +29,6 @@ public class App {
 
         // Scanner를 사용하여 양의 정수 2개(0 포함)를 전달 받음.
         while (true) {
-            double result = 0.0;
-
             // 가능한 연산 종류가 입력될 때까지 반복
             System.out.println("수행할 연산의 종류를 입력하세요 (1.사칙연산 2.원의넓이) ");
             operType = sc.next();
