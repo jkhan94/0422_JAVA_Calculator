@@ -1,5 +1,6 @@
 package level2_10_2;
 
+import level2_10_2.exception.BadOperationException;
 import level2_10_2.exception.BadOperatorException;
 import level2_10_2.exception.DivisionException;
 import level2_10_2.instance.ArithmeticCalculator;
@@ -30,7 +31,7 @@ instance 패키지 내 클래스에서 메소드를 통해 기능을 구현한 �
 public class App {
     public static void main(String[] args) {
         int num1 = 0;
-        String repeat, operType;
+        String repeat, operType = " ";
         Scanner sc = new Scanner(System.in);
 
         OperationTypes operTypes = new OperationTypes();
@@ -43,9 +44,23 @@ public class App {
 
         while (true) {
             // 가능한 연산 종류가 입력될 때까지 반복
-            System.out.print("수행할 연산의 종류를 입력하세요: ");
-            operTypes.printOperTypes();
-            operType = sc.next();
+            while (true) {
+                try {
+                    System.out.print("수행할 연산의 종류를 입력하세요: ");
+                    operTypes.printOperTypes();
+                    operType = sc.next();
+                    // 가능한 연산 종류가 입력되지 않았을 경우 예외처리
+                    if (!operTypes.operations.contains(operType)) {
+                        throw new BadOperationException();
+                    }
+                    break;
+                } catch (BadOperationException e) {
+                    // 입력이 잘못 됐을 경우 스캐너 초기화
+                    sc = new Scanner(System.in);
+//                        e.printStackTrace(); // 예외에 대한 상세 내용 출력
+                    System.out.println(e.getClass().getName() + "예외 발생: " + e.getMessage());
+                }
+            }
 
             switch (operType) {
                 case "사칙연산":
@@ -161,13 +176,21 @@ public class App {
     }
 
     public static void circleAreaCalculation(CircleCalculator cirCalc, LinkedList<Double> circleResult) {
-        int num1 = 0;
+        int num1 = -1;
         Scanner sc = new Scanner(System.in);
         // 양의 정수 입력될 때까지 반복 (0 포함)
-        do {
-            System.out.print("원의 반지름을 입력하세요: ");
-            num1 = sc.nextInt();
-        } while (num1 < 0);
+        while (num1 < 0) {
+            try {
+                System.out.print("원의 반지름을 입력하세요: ");
+                num1 = sc.nextInt();
+            } catch (InputMismatchException e) {
+                // 입력이 잘못 됐을 경우 스캐너 초기화
+                sc = new Scanner(System.in);
+//                        e.printStackTrace(); // 예외에 대한 상세 내용 출력
+                System.out.println(e.getClass().getName() + "예외 발생: 양의 정수를 입력하세요.");
+            }
+        }
+
         // 원의 넓이 계산
         circleResult.add(cirCalc.getArea(num1));
         // 원의 넓이 저장
