@@ -5,6 +5,7 @@ import level2_10_2.exception.DivisionException;
 import level2_10_2.instance.ArithmeticCalculator;
 import level2_10_2.instance.CircleCalculator;
 
+import java.util.InputMismatchException;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -28,14 +29,13 @@ instance 패키지 내 클래스에서 메소드를 통해 기능을 구현한 �
 
 public class App {
     public static void main(String[] args) {
-        int num1, num2;
-        char operator;
+        int num1 = -1, num2 = -1;
+        char operator = ' ';
         String repeat, removeVal, printResult, operType;
-        // 사칙연산 시 연산자가 제대로 입력됐는지 확인하기 위한 변수
-        String oper = "+-*/%";
         Scanner sc = new Scanner(System.in);
 
         OperationTypes operTypes = new OperationTypes();
+        CheckInput checkInput = new CheckInput();
 
         ArithmeticCalculator ariCalc = new ArithmeticCalculator();
         LinkedList<Double> arithResult = new LinkedList<Double>();
@@ -54,25 +54,38 @@ public class App {
 // 사칙연산
                 case "사칙연산":
                     // 양의 정수를 입력받을 때까지 반복
-                    do {
-                        System.out.print("첫 번째 양의 정수를 입력하세요: ");
-                        num1 = sc.nextInt();
-                        System.out.print("두 번째 양의 정수를 입력하세요: ");
-                        num2 = sc.nextInt();
-                    } while (num1 < 0 || num2 < 0);
+                    while (num1 < 0 || num2 < 0) {
+                        try {
+                            System.out.print("첫 번째 양의 정수를 입력하세요: ");
+                            num1 = sc.nextInt();
+                            System.out.print("두 번째 양의 정수를 입력하세요: ");
+                            num2 = sc.nextInt();
+                            break;
+                        }
+                        // 숫자가 아닌 다른 게 입력됐을 경우 예외처리
+                        catch (InputMismatchException e) {
+                            // 입력이 잘못 됐을 경우 스캐너 초기화
+                            sc = new Scanner(System.in);
+//                        e.printStackTrace(); // 예외에 대한 상세 내용 출력
+                            System.out.println(e.getClass().getName() + "예외 발생: 양의 정수를 입력하세요.");
+                        }
+                    }
 
                     // Scanner를 사용하여 사칙연산 기호를 전달 받음. (`charAt(0)`)
-                    System.out.print("사칙연산 기호를 입력하세요 (+ - * / %) : ");
-                    operator = sc.next().charAt(0);
-
-                    // 스트링.indexOf():  연산기호 문자열 oper에 입력된 연산기호가 없으면 -1을 리턴
-                    try {
-                        if (oper.indexOf(operator) < 0) {
-                            throw new BadOperatorException();
+                    while (true) {
+                        try {
+                            System.out.print("사칙연산 기호를 입력하세요: ");
+                            operator = sc.next().charAt(0);
+                            if (checkInput.checkOperator(operator) == false) {
+                                throw new BadOperatorException();
+                            }
+                            break;
+                        } catch (BadOperatorException e) {
+                            sc = new Scanner(System.in);
+                            System.out.println(e.getClass().getName() + "예외 발생: 양의 정수를 입력하세요.");
                         }
-                    } catch (BadOperatorException e) {
-                        System.out.println(e.getMessage());
                     }
+
 
                     // 입력된 연산기호를 바탕으로 연산 수행
                     switch (operator) {
