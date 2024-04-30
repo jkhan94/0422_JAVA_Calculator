@@ -5,7 +5,7 @@ public class CheckInput {
 
     // 연산자 기호가 잘 입력됐으면 true, 잘못 입력됐으면 false
     public boolean checkOperator(char operator){
-        // 사칙연산 시 연산자가 제대로 입력됐는지 확인하기 위한 변수
+        // 사칙연산에서 입력될 수 있는 연산자 종류
         String oper = "+-*/%";
         // 스트링.indexOf():  연산기호 문자열 oper에 입력된 연산기호가 없으면 -1을 리턴
         return oper.indexOf(operator) != -1;

@@ -21,9 +21,8 @@ public class CircleCalculator extends AdapterClass {
     public CircleCalculator() {
     }
 
-    // 원의 면적 구하기
+    // 원의 넓이 구하기
     public double getArea(int a) {
-        // 원의 넓이
         return new CircleAreaOperator().calculate(a);
     }
 

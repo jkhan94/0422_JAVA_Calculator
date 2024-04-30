@@ -3,6 +3,7 @@ package level2_10_2;
 import level2_10_2.exception.BadOperationException;
 import level2_10_2.exception.BadOperatorException;
 import level2_10_2.exception.DivisionException;
+import level2_10_2.exception.ModuloException;
 import level2_10_2.instance.ArithmeticCalculator;
 import level2_10_2.instance.CircleCalculator;
 
@@ -15,26 +16,31 @@ import java.util.Scanner;
 - 따라서 소스 코드의 변경은 최소화하면서 기능을 쉽게 추가(확장)할 수 있는 방법을 고민 해봅니다. (OCP)
 Interface & (다형성의 원리) 등을 활용*/
 
-/*새 연산 추가 시 OperationTypes클래스의 opertypes에 저장.
+/*
+연산 종류 추가 시 
+1. 파일 사용: resource 폴더의 opertypes.txt에 추가. 엔터로 구분.
+2. 배열 사용: OperationTypes클래스의 opertypes에 저장.
 
-operator 클래스에 AdapterClass 상속받는 클래스 생성해서 기능 구현.
-*매개변수가 3개 필요한 연산은 인터페이스 operation에 선언, AdapterClass에서 오버라이딩 한 후 구현.
+AdapterClass 상속받는 클래스 생성해서 연산 기능 구현.
+operator 패키지 내 클래스들이 연산 담당.
+*매개변수가 3개 필요한 연산은 인터페이스 Operation에 선언, AdapterClass에서 오버라이딩 한 후 별도의 클래스를 생성해서 구현.
 
+새로운 형태의 객체가 필요할 경우 instance 패키지에 생성.
 instance 패키지 내 클래스에서 메소드를 통해 기능을 구현한 클래스를 불러와서 사용.
 기능은 각 operator 클래스에서 정의되지만 instance 클래스는 이를 호출만 함.
 따라서 기능 변경이 필요할 경우 operator 클래스만 수정하면 됨.
 만약 덧셈 연산을 두 가지로 구현하고 싶을 경우 이름만 다른 클래스를 생성해서 구현하면 됨.
-
-새로운 형태의 객체가 필요할 경우 instance 패키지에 생성.
 */
 
 public class App {
     public static void main(String[] args) {
         int num1 = 0;
-        String repeat, operType = " ";
+        String repeat = " "; // 연산 반복 여부
+        String operType = " "; // 연산자 기호 저장
+
         Scanner sc = new Scanner(System.in);
 
-        OperationTypes operTypes = new OperationTypes();
+        OperationTypes operationTypes = new OperationTypes();
 
         ArithmeticCalculator ariCalc = new ArithmeticCalculator();
         LinkedList<Double> arithResult = new LinkedList<Double>();
@@ -47,10 +53,10 @@ public class App {
             while (true) {
                 try {
                     System.out.print("수행할 연산의 종류를 입력하세요: ");
-                    operTypes.printOperTypes();
-                    operType = sc.next();
+                    operationTypes.printOperTypes(); // 가능한 연산 종류 출력
+                    operType = sc.next(); // 연산 종류 입력 받음
                     // 가능한 연산 종류가 입력되지 않았을 경우 예외처리
-                    if (!operTypes.operations.contains(operType)) {
+                    if (!operationTypes.operations.contains(operType)) {
                         throw new BadOperationException();
                     }
                     break;
@@ -62,6 +68,7 @@ public class App {
                 }
             }
 
+            // switch~case 안에 코드를 작성하니 가독성이 떨어져서 메소드로 분리
             switch (operType) {
                 case "사칙연산":
                     arithCalculation(ariCalc, arithResult);
@@ -71,8 +78,8 @@ public class App {
                     break;
             }
 
-            // 가능한 연산 종류가 입력됐을 경우 계속 계산할 건지 결정.
-            if (operType.equals("사칙연산") || operType.equals("원의넓이")) {
+            // 가능한 연산 종류가 입력됐을 때 계속 계산할 건지 결정.
+            if (operationTypes.operations.contains(operType)) {
                 System.out.println("더 계산하시려면 아무 키나 누르세요. (exit 입력 시 종료)");
                 repeat = sc.next();
                 if (repeat.equals("exit")) {
@@ -84,12 +91,12 @@ public class App {
         } // while 루프
 
         sc.close();
-
     }
 
-    // 사칙연산 수행 함수
-    // static: 프로그램 실행 시 메모리에 먼저 올리는 함수
-    // main보다 먼저 실행되어야 하므로 static으로 생성.
+
+// 사칙연산 수행 함수
+// static: 프로그램 실행 시 메모리에 먼저 올리는 함수
+// main보다 먼저 실행되어야 하므로 static으로 생성.
     public static void arithCalculation(ArithmeticCalculator ariCalc, LinkedList<Double> arithResult) {
         int num1 = -1, num2 = -1;
         char operator = ' ';
@@ -149,15 +156,22 @@ public class App {
                     }
                     arithResult.add(ariCalc.div(num1, num2));
                 } catch (DivisionException e) {
-                    System.out.println(e.getMessage());
+                    System.out.println(e.getClass().getName() + "예외 발생: " + e.getMessage());
                 }
                 break;
             case '%':
-                arithResult.add(ariCalc.mod(num1, num2));
+                try {
+                    if (num2 == 0) {
+                        throw new ModuloException();
+                    }
+                    arithResult.add(ariCalc.mod(num1, num2));
+                } catch (ModuloException e) {
+                    System.out.println(e.getClass().getName() + "예외 발생: " + e.getMessage());
+                }
                 break;
         }
         ariCalc.setOperResult(arithResult);
-//                System.out.println(ariCalc.getOperResult());
+//                System.out.println(ariCalc.getOperResult()); // 저장됐는지 확인
 
         // 가장 오래된 연산 결과 삭제
         System.out.println("가장 먼저 저장된 연산 결과를 삭제하려면 remove를 입력하세요. (삭제하지 않으려면 아무 키나 누르세요)");
@@ -174,9 +188,12 @@ public class App {
         }
     }
 
+
+// 원의 넓이 구하는 함수
     public static void circleAreaCalculation(CircleCalculator cirCalc, LinkedList<Double> circleResult) {
         int num1 = -1;
         Scanner sc = new Scanner(System.in);
+
         // 양의 정수 입력될 때까지 반복 (0 포함)
         while (num1 < 0) {
             try {
@@ -192,9 +209,11 @@ public class App {
 
         // 원의 넓이 계산
         circleResult.add(cirCalc.getArea(num1));
+
         // 원의 넓이 저장
         cirCalc.setOperResult(circleResult);
 //      System.out.println(cirCalc.getOperResult());
+
         // 저장된 연산 결과 출력
         cirCalc.inquiryResults();
     }

@@ -19,16 +19,17 @@ public class OperationTypes {
     String fileName = "/opertypes.txt";
     String filePath = " ";
 
+    // 연산 종류가 저장된 파일 읽기
+    // 연산 종류가 적으면 배열로 선언해도 되지만 연산 종류가 많이질 경우 배열이 길어짐.
+    // 더불어 연산 종류가 변경될 경우 매번 코드를 수정해야 함.
+    // 그러나 파일에서 불러올 경우 파일을 수정하여 연산 종류를 관리할 수 있음.
     public OperationTypes() {
-        // 연산 종류를 출력하기 위한 파일 읽기
-        // 연산 종류가 별로 없으면 위처럼 배열로 선언해도 되지만 연산 종류가 많이질 경우 배열이 길어짐.
         // 파일 경로 설정
         filePath = basePath + resourcePath + fileName;
         if (!Files.exists(Paths.get(filePath))) {
             filePath = basePath + "/resource" + fileName;
         }
     }
-
 
     // 연산 종류 출력
     public void printOperTypes() {
@@ -37,7 +38,7 @@ public class OperationTypes {
             br = new BufferedReader(new FileReader(filePath));
             int i = 1;
             // readLine()은 값을 읽어올 때 줄바꿈 문자는 가져오지 않는다
-            // 줄바꿈 문자를 만나면 읽기를 중단 = line by line으로 읽음
+            // 줄바꿈 문자를 만나면 읽기 중단 = line by line으로 읽음
             while ((line = br.readLine()) != null) {
                 // 콘솔에 연산 종류 출력
                 System.out.print(i + ". " + line + " ");
@@ -54,8 +55,11 @@ public class OperationTypes {
     }
 
 /*  배열로 연산 종류 출력
+    연산 종류가 정해져 있고 수정될 일도 없다면 아래처럼 배열을 이용하는 게 나을 수 있음.
+
     // 연산 종류를 저장한 문자열 배열
     String[] opertypes = {"사칙연산", "원의넓이"};
+
     // 생성자 호출 시 연결리스트에 연산 종류 저장
     public OperationTypes() {
         for (int i = 0; i < opertypes.length; i++) {

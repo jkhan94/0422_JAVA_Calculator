@@ -1,5 +1,6 @@
 package level2_10_2;
 
+// 연산, 연산 결과 출력, 연산 결과 값 제거를 위한 인터페이스
 public interface Operation {
     // 매개변수가 2개인 계산
     public double calculate(int a, int b);
