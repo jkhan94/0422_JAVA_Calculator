@@ -7,4 +7,4 @@ level2_10 : level2에서 10번을 가이드라인을 참고하여 구현<br>
 level2_10_1 : level2에서 10번 가이드라인 참고하지 않고 구현<br>
 level2_10_2 : level2_10, level2_10_1을 작성한 경험을 바탕으로 <ins>**level2 10번**</ins> 구현.<br><br>
 
-
+reousrce: level2_10_2에서 사용. 연산 종류를 저장하는 파일이 있음.
