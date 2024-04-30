@@ -111,7 +111,7 @@ public class App {
             catch (InputMismatchException e) {
                 // 입력이 잘못 됐을 경우 스캐너 초기화
                 sc = new Scanner(System.in);
-//                        e.printStackTrace(); // 예외에 대한 상세 내용 출력
+//              e.printStackTrace(); // 예외에 대한 상세 내용 출력
                 System.out.println(e.getClass().getName() + "예외 발생: 양의 정수를 입력하세요.");
             }
         }
@@ -131,7 +131,7 @@ public class App {
             }
         }
 
-        // 입력된 연산기호를 바탕으로 연산 수행
+        // 입력된 두 정수와 연산자로 연산 수행
         switch (operator) {
             case '+':
                 arithResult.add(ariCalc.add(num1, num2));
@@ -158,7 +158,6 @@ public class App {
         }
         ariCalc.setOperResult(arithResult);
 //                System.out.println(ariCalc.getOperResult());
-
 
         // 가장 오래된 연산 결과 삭제
         System.out.println("가장 먼저 저장된 연산 결과를 삭제하려면 remove를 입력하세요. (삭제하지 않으려면 아무 키나 누르세요)");
@@ -195,10 +194,9 @@ public class App {
         circleResult.add(cirCalc.getArea(num1));
         // 원의 넓이 저장
         cirCalc.setOperResult(circleResult);
-//              System.out.println(cirCalc.getOperResult());
+//      System.out.println(cirCalc.getOperResult());
         // 저장된 연산 결과 출력
         cirCalc.inquiryResults();
     }
-
 
 }
