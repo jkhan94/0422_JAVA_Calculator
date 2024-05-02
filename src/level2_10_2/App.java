@@ -128,13 +128,13 @@ public class App {
             try {
                 System.out.print("사칙연산 기호를 입력하세요: ");
                 operator = sc.next().charAt(0);
-                if (checkInput.checkOperator(operator) == false) {
+                if (!checkInput.checkOperator(operator)) {
                     throw new BadOperatorException();
                 }
                 break;
             } catch (BadOperatorException e) {
                 sc = new Scanner(System.in);
-                System.out.println(e.getClass().getName() + "예외 발생: 양의 정수를 입력하세요.");
+                System.out.println(e.getClass().getName() + "예외 발생: 연산자를 입력하세요.");
             }
         }
 
