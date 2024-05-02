@@ -1,6 +1,7 @@
 package level2_11;
 
-import level2_10_2.instance.ArithmeticCalculator;
+import level2_11.exception.NegativeNumberException;
+import level2_11.instance.ArithmeticCalculator;
 import level2_11.exception.BadOperationException;
 import level2_11.exception.BadOperatorException;
 import level2_11.exception.DivisionException;
@@ -36,7 +37,7 @@ public class App {
     public static void main(String[] args) {
         int num1 = 0;
         String repeat = " "; // 연산 반복 여부
-        String operType = " "; // 연산자 기호 저장
+        String operType = " "; // 연산 종류 저장
 
         Scanner sc = new Scanner(System.in);
 
@@ -47,6 +48,8 @@ public class App {
 
         CircleCalculator cirCalc = new CircleCalculator();
         LinkedList<Double> circleResult = new LinkedList<Double>();
+        LinkedList<Double> circleArc = new LinkedList<Double>();
+        LinkedList<Double> circleSector = new LinkedList<Double>();
 
         while (true) {
             // 가능한 연산 종류가 입력될 때까지 반복
@@ -77,6 +80,12 @@ public class App {
                     // 원의 넓이
                 case "원의넓이":
                     circleAreaCalculation(cirCalc, circleResult);
+                    break;
+                case "원의호길이":
+                    circleArcCalculation(cirCalc, circleArc);
+                    break;
+                case "부채꼴넓이":
+                    circleSectorCalculation(cirCalc, circleSector);
                     break;
             }
 
@@ -114,6 +123,10 @@ public class App {
                 num1 = sc.nextInt();
                 System.out.print("두 번째 양의 정수를 입력하세요: ");
                 num2 = sc.nextInt();
+                // 음수가 입력됐으면 예외 발생
+                if(num1 < 0 || num2 < 0){
+                    throw new NegativeNumberException();
+                }
                 break;
             }
             // 숫자가 아닌 다른 게 입력됐을 경우 예외처리
@@ -122,6 +135,13 @@ public class App {
                 sc = new Scanner(System.in);
 //              e.printStackTrace(); // 예외에 대한 상세 내용 출력
                 System.out.println(e.getClass().getName() + "예외 발생: 양의 정수를 입력하세요.");
+            }
+            // 음수가 입력됐을 경우 예외 처리
+            catch (NegativeNumberException e) {
+                // 입력이 잘못 됐을 경우 스캐너 초기화
+                sc = new Scanner(System.in);
+//              e.printStackTrace(); // 예외에 대한 상세 내용 출력
+                System.out.println(e.getClass().getName() + "예외 발생: " + e.getMessage());
             }
         }
 
@@ -190,7 +210,6 @@ public class App {
         }
     }
 
-
 // 원의 넓이 구하는 함수
     public static void circleAreaCalculation(CircleCalculator cirCalc, LinkedList<Double> circleResult) {
         int num1 = -1;
@@ -201,11 +220,23 @@ public class App {
             try {
                 System.out.print("원의 반지름을 입력하세요: ");
                 num1 = sc.nextInt();
+                // 음수가 입력됐으면 예외 발생
+                if(num1 < 0){
+                    throw new NegativeNumberException();
+                }
+                break;
             } catch (InputMismatchException e) {
                 // 입력이 잘못 됐을 경우 스캐너 초기화
                 sc = new Scanner(System.in);
 //                        e.printStackTrace(); // 예외에 대한 상세 내용 출력
                 System.out.println(e.getClass().getName() + "예외 발생: 양의 정수를 입력하세요.");
+            }
+            // 음수가 입력됐을 경우 예외 처리
+            catch (NegativeNumberException e) {
+                // 입력이 잘못 됐을 경우 스캐너 초기화
+                sc = new Scanner(System.in);
+//              e.printStackTrace(); // 예외에 대한 상세 내용 출력
+                System.out.println(e.getClass().getName() + "예외 발생: " + e.getMessage());
             }
         }
 
@@ -220,4 +251,87 @@ public class App {
         cirCalc.inquiryResults();
     }
 
+// 호의 길이 구하는 함수
+    public static void circleArcCalculation(CircleCalculator cirCalc, LinkedList<Double> circleArc) {
+        int num1 = -1;
+        int angle = 0;
+        Scanner sc = new Scanner(System.in);
+
+        while (num1 < 0 || angle<0) {
+            try {
+                System.out.print("원의 반지름을 입력하세요: ");
+                num1 = sc.nextInt();
+                System.out.print("0-360도 사이의 각도를 입력하세요: ");
+                angle=sc.nextInt();
+                // 음수가 입력됐으면 예외 발생
+                if(num1 < 0 || angle<0){
+                    throw new NegativeNumberException();
+                }
+                break;
+            } catch (InputMismatchException e) {
+                // 입력이 잘못 됐을 경우 스캐너 초기화
+                sc = new Scanner(System.in);
+//                        e.printStackTrace(); // 예외에 대한 상세 내용 출력
+                System.out.println(e.getClass().getName() + "예외 발생: 양의 정수를 입력하세요.");
+            }
+            // 음수가 입력됐을 경우 예외 처리
+            catch (NegativeNumberException e) {
+                // 입력이 잘못 됐을 경우 스캐너 초기화
+                sc = new Scanner(System.in);
+//              e.printStackTrace(); // 예외에 대한 상세 내용 출력
+                System.out.println(e.getClass().getName() + "예외 발생: " + e.getMessage());
+            }
+        }
+
+        // 호의 길이 계산
+        circleArc.add(cirCalc.getArc(num1, angle));
+
+        // 호의 길이 저장
+        cirCalc.setOperResult(circleArc);
+
+        // 저장된 연산 결과 출력
+        cirCalc.inquiryResults();
+    }
+
+// 부채꼴의 넓이 구하는 함수
+    public static void circleSectorCalculation(CircleCalculator cirCalc, LinkedList<Double> circleSector) {
+        int num1 = -1;
+        int angle = 0;
+        Scanner sc = new Scanner(System.in);
+
+        while (num1 < 0 || angle<0) {
+            try {
+                System.out.print("원의 반지름을 입력하세요: ");
+                num1 = sc.nextInt();
+                System.out.print("0-360도 사이의 각도를 입력하세요: ");
+                angle=sc.nextInt();
+                // 음수가 입력됐으면 예외 발생
+                if(num1 < 0 || angle<0){
+                    throw new NegativeNumberException();
+                }
+                break;
+            } catch (InputMismatchException e) {
+                // 입력이 잘못 됐을 경우 스캐너 초기화
+                sc = new Scanner(System.in);
+//                        e.printStackTrace(); // 예외에 대한 상세 내용 출력
+                System.out.println(e.getClass().getName() + "예외 발생: 양의 정수를 입력하세요.");
+            }
+            // 음수가 입력됐을 경우 예외 처리
+            catch (NegativeNumberException e) {
+                // 입력이 잘못 됐을 경우 스캐너 초기화
+                sc = new Scanner(System.in);
+//              e.printStackTrace(); // 예외에 대한 상세 내용 출력
+                System.out.println(e.getClass().getName() + "예외 발생: " + e.getMessage());
+            }
+        }
+
+        // 호의 길이 계산
+        circleSector.add(cirCalc.getSectorArea(num1, angle));
+
+        // 호의 길이 저장
+        cirCalc.setOperResult(circleSector);
+
+        // 저장된 연산 결과 출력
+        cirCalc.inquiryResults();
+    }
 }

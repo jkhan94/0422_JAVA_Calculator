@@ -1,6 +1,7 @@
 package level2_10_2.instance;
 
 import level2_10_2.AdapterClass;
+import level2_11.operator.circle.CircleArcOperator;
 import level2_10_2.operator.circle.CircleAreaOperator;
 
 import java.util.LinkedList;
@@ -22,8 +23,8 @@ public class CircleCalculator extends AdapterClass {
     }
 
     // 원의 넓이 구하기
-    public double getArea(int a) {
-        return new CircleAreaOperator().calculate(a);
+    public double getArea(int radius) {
+        return new CircleAreaOperator().calculate(radius);
     }
 
     // 저장된 결과값 출력
