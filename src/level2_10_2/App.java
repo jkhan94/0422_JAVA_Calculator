@@ -36,7 +36,7 @@ public class App {
     public static void main(String[] args) {
         int num1 = 0;
         String repeat = " "; // 연산 반복 여부
-        String operType = " "; // 연산자 기호 저장
+        String operType = " "; // 연산 종류 저장
 
         Scanner sc = new Scanner(System.in);
 
