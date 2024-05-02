@@ -48,6 +48,7 @@ public class App {
         CircleCalculator cirCalc = new CircleCalculator();
         LinkedList<Double> circleResult = new LinkedList<Double>();
 
+        // 연산 반복
         while (true) {
             // 가능한 연산 종류가 입력될 때까지 반복
             while (true) {
