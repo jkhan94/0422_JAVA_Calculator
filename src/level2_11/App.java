@@ -44,13 +44,9 @@ public class App {
         OperationTypes operationTypes = new OperationTypes();
 
         ArithmeticCalculator ariCalc = new ArithmeticCalculator();
-        LinkedList<Double> arithResult = new LinkedList<Double>();
-
         CircleCalculator cirCalc = new CircleCalculator();
-        LinkedList<Double> circleResult = new LinkedList<Double>();
-        LinkedList<Double> circleArc = new LinkedList<Double>();
-        LinkedList<Double> circleSector = new LinkedList<Double>();
 
+        // 연산 반복
         while (true) {
             // 가능한 연산 종류가 입력될 때까지 반복
             while (true) {
@@ -75,17 +71,17 @@ public class App {
             switch (operType) {
                 // 사칙연산
                 case "사칙연산":
-                    arithCalculation(ariCalc, arithResult);
+                    arithCalculation(ariCalc);
                     break;
-                    // 원의 넓이
+                // 원의 넓이
                 case "원의넓이":
-                    circleAreaCalculation(cirCalc, circleResult);
+                    circleAreaCalculation(cirCalc);
                     break;
                 case "원의호길이":
-                    circleArcCalculation(cirCalc, circleArc);
+                    circleArcCalculation(cirCalc);
                     break;
                 case "부채꼴넓이":
-                    circleSectorCalculation(cirCalc, circleSector);
+                    circleSectorCalculation(cirCalc);
                     break;
             }
 
@@ -107,8 +103,8 @@ public class App {
 
 // 사칙연산 수행 함수
 // static: 프로그램 실행 시 메모리에 먼저 올리는 함수
-// main보다 먼저 실행되어야 하므로 static으로 생성.
-    public static void arithCalculation(ArithmeticCalculator ariCalc, LinkedList<Double> arithResult) {
+// main보다 먼저 실행되어야 하므로 static으로 선언.
+    public static void arithCalculation(ArithmeticCalculator ariCalc) {
         int num1 = -1, num2 = -1;
         char operator = ' ';
         String removeVal, printResult;
@@ -117,16 +113,28 @@ public class App {
         CheckInput checkInput = new CheckInput();
 
         // 양의 정수를 입력받을 때까지 반복
-        while (num1 < 0 || num2 < 0) {
+        // Scanner를 사용하여 사칙연산 기호를 전달 받음. (`charAt(0)`)
+        while (true) {
             try {
                 System.out.print("첫 번째 양의 정수를 입력하세요: ");
                 num1 = sc.nextInt();
+                if (num1 < 0) {
+                    throw new NegativeNumberException();
+                }
+                
                 System.out.print("두 번째 양의 정수를 입력하세요: ");
                 num2 = sc.nextInt();
                 // 음수가 입력됐으면 예외 발생
-                if(num1 < 0 || num2 < 0){
+                if (num2 < 0) {
                     throw new NegativeNumberException();
                 }
+
+                System.out.print("사칙연산 기호를 입력하세요: ");
+                operator = sc.next().charAt(0);
+                if (!checkInput.checkOperator(operator)) {
+                    throw new BadOperatorException();
+                }
+                
                 break;
             }
             // 숫자가 아닌 다른 게 입력됐을 경우 예외처리
@@ -143,18 +151,8 @@ public class App {
 //              e.printStackTrace(); // 예외에 대한 상세 내용 출력
                 System.out.println(e.getClass().getName() + "예외 발생: " + e.getMessage());
             }
-        }
-
-        // Scanner를 사용하여 사칙연산 기호를 전달 받음. (`charAt(0)`)
-        while (true) {
-            try {
-                System.out.print("사칙연산 기호를 입력하세요: ");
-                operator = sc.next().charAt(0);
-                if (checkInput.checkOperator(operator) == false) {
-                    throw new BadOperatorException();
-                }
-                break;
-            } catch (BadOperatorException e) {
+            // 연산자 기호가 입력되지 않았을 때
+            catch (BadOperatorException e) {
                 sc = new Scanner(System.in);
                 System.out.println(e.getClass().getName() + "예외 발생: 연산자를 입력하세요.");
             }
@@ -163,20 +161,20 @@ public class App {
         // 입력된 두 정수와 연산자로 연산 수행
         switch (operator) {
             case '+':
-                arithResult.add(ariCalc.add(num1, num2));
+                ariCalc.setOperResult(ariCalc.add(num1, num2));
                 break;
             case '-':
-                arithResult.add(ariCalc.sub(num1, num2));
+                ariCalc.setOperResult(ariCalc.sub(num1, num2));
                 break;
             case '*':
-                arithResult.add(ariCalc.mul(num1, num2));
+                ariCalc.setOperResult(ariCalc.mul(num1, num2));
                 break;
             case '/':
                 try {
                     if (num2 == 0) {
                         throw new DivisionException();
                     }
-                    arithResult.add(ariCalc.div(num1, num2));
+                    ariCalc.setOperResult(ariCalc.div(num1, num2));
                 } catch (DivisionException e) {
                     System.out.println(e.getClass().getName() + "예외 발생: " + e.getMessage());
                 }
@@ -186,13 +184,12 @@ public class App {
                     if (num2 == 0) {
                         throw new ModuloException();
                     }
-                    arithResult.add(ariCalc.mod(num1, num2));
+                    ariCalc.setOperResult(ariCalc.mod(num1, num2));
                 } catch (ModuloException e) {
                     System.out.println(e.getClass().getName() + "예외 발생: " + e.getMessage());
                 }
                 break;
         }
-        ariCalc.setOperResult(arithResult);
 //                System.out.println(ariCalc.getOperResult()); // 저장됐는지 확인
 
         // 가장 오래된 연산 결과 삭제
@@ -210,8 +207,8 @@ public class App {
         }
     }
 
-// 원의 넓이 구하는 함수
-    public static void circleAreaCalculation(CircleCalculator cirCalc, LinkedList<Double> circleResult) {
+    // 원의 넓이 구하는 함수
+    public static void circleAreaCalculation(CircleCalculator cirCalc) {
         int num1 = -1;
         Scanner sc = new Scanner(System.in);
 
@@ -221,7 +218,7 @@ public class App {
                 System.out.print("원의 반지름을 입력하세요: ");
                 num1 = sc.nextInt();
                 // 음수가 입력됐으면 예외 발생
-                if(num1 < 0){
+                if (num1 < 0) {
                     throw new NegativeNumberException();
                 }
                 break;
@@ -240,31 +237,29 @@ public class App {
             }
         }
 
-        // 원의 넓이 계산
-        circleResult.add(cirCalc.getArea(num1));
-
-        // 원의 넓이 저장
-        cirCalc.setOperResult(circleResult);
-//      System.out.println(cirCalc.getOperResult());
+        // 원의 넓이 계산 후 저장
+        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName(); // 현재 메소드명
+//        System.out.println("현재 메소드명 : " + methodName);
+        cirCalc.setOperResult(cirCalc.getArea(num1),methodName);
 
         // 저장된 연산 결과 출력
-        cirCalc.inquiryResults();
+        cirCalc.inquiryResults(methodName);
     }
 
-// 호의 길이 구하는 함수
-    public static void circleArcCalculation(CircleCalculator cirCalc, LinkedList<Double> circleArc) {
+    // 호의 길이 구하는 함수
+    public static void circleArcCalculation(CircleCalculator cirCalc) {
         int num1 = -1;
         int angle = 0;
         Scanner sc = new Scanner(System.in);
 
-        while (num1 < 0 || angle<0) {
+        while (num1 < 0 || angle < 0) {
             try {
                 System.out.print("원의 반지름을 입력하세요: ");
                 num1 = sc.nextInt();
                 System.out.print("0-360도 사이의 각도를 입력하세요: ");
-                angle=sc.nextInt();
+                angle = sc.nextInt();
                 // 음수가 입력됐으면 예외 발생
-                if(num1 < 0 || angle<0){
+                if (num1 < 0 || angle < 0) {
                     throw new NegativeNumberException();
                 }
                 break;
@@ -284,29 +279,27 @@ public class App {
         }
 
         // 호의 길이 계산
-        circleArc.add(cirCalc.getArc(num1, angle));
-
-        // 호의 길이 저장
-        cirCalc.setOperResult(circleArc);
+        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName(); // 현재 메소드명
+        cirCalc.setOperResult(cirCalc.getArc(num1, angle), methodName);
 
         // 저장된 연산 결과 출력
-        cirCalc.inquiryResults();
+        cirCalc.inquiryResults(methodName);
     }
 
-// 부채꼴의 넓이 구하는 함수
-    public static void circleSectorCalculation(CircleCalculator cirCalc, LinkedList<Double> circleSector) {
+    // 부채꼴의 넓이 구하는 함수
+    public static void circleSectorCalculation(CircleCalculator cirCalc) {
         int num1 = -1;
         int angle = 0;
         Scanner sc = new Scanner(System.in);
 
-        while (num1 < 0 || angle<0) {
+        while (num1 < 0 || angle < 0) {
             try {
                 System.out.print("원의 반지름을 입력하세요: ");
                 num1 = sc.nextInt();
                 System.out.print("0-360도 사이의 각도를 입력하세요: ");
-                angle=sc.nextInt();
+                angle = sc.nextInt();
                 // 음수가 입력됐으면 예외 발생
-                if(num1 < 0 || angle<0){
+                if (num1 < 0 || angle < 0) {
                     throw new NegativeNumberException();
                 }
                 break;
@@ -326,12 +319,10 @@ public class App {
         }
 
         // 호의 길이 계산
-        circleSector.add(cirCalc.getSectorArea(num1, angle));
-
-        // 호의 길이 저장
-        cirCalc.setOperResult(circleSector);
+        String methodName = Thread.currentThread().getStackTrace()[1].getMethodName(); // 현재 메소드명
+        cirCalc.setOperResult(cirCalc.getSectorArea(num1, angle),methodName);
 
         // 저장된 연산 결과 출력
-        cirCalc.inquiryResults();
+        cirCalc.inquiryResults(methodName);
     }
 }

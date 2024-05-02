@@ -20,6 +20,11 @@ public class AdapterClass implements Operation {
     }
 
     @Override
+    public void inquiryResults(String methodName) {
+
+    }
+
+    @Override
     public void removeResult() {
 
     }

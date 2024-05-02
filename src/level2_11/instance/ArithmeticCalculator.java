@@ -7,15 +7,13 @@ import java.util.LinkedList;
 
 public class ArithmeticCalculator extends AdapterClass {
     // 필드
-    private LinkedList<Double> operResult = new LinkedList<Double>();
+    LinkedList<Double> arithResult = new LinkedList<Double>();
 
     //getter, setter
     public LinkedList<Double> getOperResult() {
-        return operResult;
+        return arithResult;
     }
-    public void setOperResult(LinkedList<Double> operResult) {
-        this.operResult = operResult;
-    }
+    public void setOperResult(double result) {  this.arithResult.add(result);    }
 
     // 생성자
     public ArithmeticCalculator() {
@@ -44,7 +42,7 @@ public class ArithmeticCalculator extends AdapterClass {
     @Override
     public void removeResult() {
         try {
-            operResult.remove(0);
+            arithResult.remove(0);
         } catch (IndexOutOfBoundsException e) {
             System.out.println(e.getClass().getName() + "예외 발생: 리스트가 비어 있습니다!");
         }
@@ -53,6 +51,6 @@ public class ArithmeticCalculator extends AdapterClass {
     // 리스트에 저장된 값들 출력
     @Override
     public void inquiryResults() {
-        System.out.println("저장된 연산 결과 출력 : " + operResult);
+        System.out.println("저장된 연산 결과 출력 : " + arithResult);
     }
 }
