@@ -51,6 +51,8 @@ public class ArithmeticCalculator extends AdapterClass {
     // 리스트에 저장된 값들 출력
     @Override
     public void inquiryResults() {
-        System.out.println("저장된 연산 결과 출력 : " + arithResult);
+        // 스트림 사용
+        arithResult.stream().forEach(System.out::println);
+//        System.out.println("저장된 연산 결과 출력 : " + arithResult);
     }
 }
